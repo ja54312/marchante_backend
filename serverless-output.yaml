@@ -1,0 +1,306 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'marchante_backend
+
+  Sample SAM Template for marchante_backend
+
+  '
+Globals:
+  Function:
+    Timeout: 5
+Resources:
+  RegisterUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5d6079ad14cd7b1c437516853e041898
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /register
+            Method: POST
+      Environment:
+        Variables:
+          HOST_MAIL: smtp.hostinger.mx
+          USER_MAIL: contacto@mimarchante.mx
+          PASS_MAIL: '!dSc3i!0mY9'
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+  RegisterUserCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5d6079ad14cd7b1c437516853e041898
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /register
+            Method: OPTIONS
+  LoginFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/0a474a185e08f671b1809146b4e3b8a5
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  LoginCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/0a474a185e08f671b1809146b4e3b8a5
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: OPTIONS
+  AddProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/68f273d49cfccf79f528972e637f67a4
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /add-products
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  AddProductsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5582e1ef645fbdbbe025afdbdef98b3d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}
+            Method: OPTIONS
+  GetProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5582e1ef645fbdbbe025afdbdef98b3d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  UpdateProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/3b38556ae4653ec70f876f2417e96e9d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /update-product
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  UpdateProductCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/3b38556ae4653ec70f876f2417e96e9d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /update-product
+            Method: OPTIONS
+  DisabledProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5967d1f3ededef49d55cb8a32695e43e
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /disabled-product
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  DisabledProductCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5967d1f3ededef49d55cb8a32695e43e
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /disabled-product
+            Method: OPTIONS
+  ForgotPassFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/d304f77511893fe9d1c900956060d19b
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /forgot-password
+            Method: POST
+      Environment:
+        Variables:
+          HOST_MAIL: smtp.hostinger.mx
+          USER_MAIL: contacto@mimarchante.mx
+          PASS_MAIL: '!dSc3i!0mY9'
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+  ForgotPassCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/5967d1f3ededef49d55cb8a32695e43e
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /forgot-password
+            Method: OPTIONS
+  ChangePassFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/c506e1bb03a10cc1aeb7d7de1f5ece23
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /change-pass
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+  ChangePassCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/c506e1bb03a10cc1aeb7d7de1f5ece23
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /change-pass
+            Method: OPTIONS
+Outputs:
+  RegisterUserAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/register/
+  LoginAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/login/
+  AddProductsAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/add-products/
+  GetProductsAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products/
+  UpdateProductsAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/update-product/
+  DisabledProductsAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/disabled-product/
+  ForgotPassAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/forgot-password/
+  ChangePassAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/change-pass/

@@ -32,11 +32,23 @@ type Body struct {
 }
 
 type Response struct {
-	Success bool   `json:"success" bson:"success"`
-	Message string `json:"msg,omitempty" bson:"msg"`
-	Token   string `json:"token,omitempty" bson:"token"`
-	IDUser  int    `json:"id_user,omitempty" bson:"id_user"`
-	IDRol   string `json:"id_rol,omitempty" bson:"id_rol"`
+	Success bool     `json:"success" bson:"success"`
+	Message string   `json:"msg,omitempty" bson:"msg"`
+	Token   string   `json:"token,omitempty" bson:"token"`
+	Data    DataUser `json:"data_user,omitempty" bson:"data_user"`
+}
+
+type DataUser struct {
+	IDUser       int    `json:"id_user,omitempty" bson:"id_user"`
+	Customer     int    `json:"id_rol,omitempty" bson:"id_rol"`
+	TypeMarket   string `json:"type_market,omitempty" bson:"type_market"`
+	Zone         string `json:"zone,omitempty" bson:"zone"`
+	Market       string `json:"market,omitempty" bson:"market"`
+	Local        string `json:"local,omitempty" bson:"local"`
+	NameUser     string `json:"name_user,omitempty" bson:"name_user"`
+	Mail         string `json:"mail,omitempty" bson:"mail"`
+	NameTypeUser string `json:"name_type_user,omitempty" bson:"name_type_user"`
+	Redirect     string `json:"redirect,omitempty" bson:"redirect"`
 }
 
 type RequestBody struct {
@@ -287,20 +299,27 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return returnApiGateway(res, 400)
 	}
 
-	resultsData, err := db.Query("SELECT id, customer FROM users WHERE mail = ? and active = 1", user)
+	resultsData, err := db.Query("SELECT a.id, a.customer, a.type_market, a.zone, a.market, a.local, a.name, a.mail, b.nombre, b.redirect FROM users as a left join type_users as b on a.customer = b.id WHERE a.mail = ? and a.active = 1", user)
 	if err != nil {
-		var res Response
-		res.Success = false
-		res.Message = "No existen datos para esta consulta"
-		return returnApiGateway(res, 400)
+		var response Response
+		response.Success = false
+		response.Message = "No existen datos para esta consulta"
+		return returnApiGateway(response, 400)
 	}
 
 	var res Response
 	for resultsData.Next() {
-		err = resultsData.Scan(&res.IDUser, &res.IDRol)
+		err = resultsData.Scan(&res.Data.IDUser, &res.Data.Customer, &res.Data.TypeMarket, &res.Data.Zone, &res.Data.Market, &res.Data.Local, &res.Data.NameUser, &res.Data.Mail, &res.Data.NameTypeUser, &res.Data.Redirect)
 		if err != nil {
 			panic(err.Error())
 		}
+	}
+
+	if res.Data.IDUser <= 0 {
+		var response Response
+		response.Success = false
+		response.Message = "No existen datos para esta consulta"
+		return returnApiGateway(response, 400)
 	}
 
 	res.Success = true

@@ -5,11 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net/smtp"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/domodwyer/mailyak"
 
 	_ "github.com/go-sql-driver/mysql"
 	"golang.org/x/crypto/bcrypt"
@@ -74,12 +77,53 @@ func hashAndSalt(pwd []byte) string {
 func returnApiGateway(r Response, st int) (events.APIGatewayProxyResponse, error) {
 	resInBytes := returnArrayBytes(r)
 	return events.APIGatewayProxyResponse{
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin":  "*",
+			"Access-Control-Allow-Methods": "*",
+			"Access-Control-Allow-Headers": "authorization, content-type",
+		},
 		Body:       fmt.Sprintf(string(resInBytes)),
 		StatusCode: st,
 	}, nil
 }
 
+func sendMail(to []string, typeUser string) bool {
+	host, ok := os.LookupEnv("HOST_MAIL")
+	if !ok {
+		return false
+	}
+	user, ok := os.LookupEnv("USER_MAIL")
+	if !ok {
+		return false
+	}
+	pwd, ok := os.LookupEnv("PASS_MAIL")
+	if !ok {
+		return false
+	}
+
+	auth := smtp.PlainAuth("", user, pwd, host)
+
+	mail := mailyak.New(host+":587", auth)
+
+	mail.To(to...)
+	mail.From(user)
+	mail.FromName("Mi Marchante - Unidos por México")
+	mail.Subject("Registro de usuario")
+	mail.HTML().Set("<section style='width: 600px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%);'> <div style='background-color: #A9CE4D; padding: 18px; text-align: center; color: #fff; font-size: 18px; font-family: sans-serif; text-transform: uppercase;'>Registro de usuario</div> <div style='padding: 30px; font-family: sans-serif; font-size: 15px;'>Se ha creado el usuario con el correo: " + to[0] + ", el tipo de usuario que has creado es:  " + typeUser + ", bienvenido a Mi Marchante para poder ingresar entre <a href='mimarchante.mx'>aquí</a></div> <div style='font-size: 13px; padding: 30px; text-align: center; border-bottom: 1px solid #A9CE4D; border-left: 1px solid #A9CE4D; border-right: 1px solid #A9CE4D;'>Saludos de parte del equipo mimarchante.mx</div></section>")
+	if err := mail.Send(); err != nil {
+		return false
+	}
+	fmt.Println("enviado")
+	return true
+}
+
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	if request.HTTPMethod == "OPTIONS" {
+		var response Response
+		response.Success = true
+		return returnApiGateway(response, 200)
+	}
+
 	var bodyData *RequestBody
 	err := json.Unmarshal([]byte(request.Body), &bodyData)
 
@@ -154,6 +198,25 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		response = Response{false, "Error al guardar los datos, intentelo nuevamente."}
 		return returnApiGateway(response, 400)
 	}
+
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		var customer string
+		switch bodyData.Customer {
+		case "1":
+			customer = "Locatario"
+		case "2":
+			customer = "Cliente"
+		case "3":
+			customer = "Admin"
+		}
+		ok := sendMail([]string{bodyData.Mail}, customer)
+		fmt.Println(ok)
+	}()
+
+	wg.Wait()
 
 	check_insert, _ := insert.RowsAffected()
 	if check_insert > 0 {
