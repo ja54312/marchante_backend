@@ -14,3 +14,7 @@ build:
 
 	GOOS=linux GOARCH=amd64 go build -o forgot-pass/build/main ./forgot-pass/main.go
 	GOOS=linux GOARCH=amd64 go build -o change-pass/build/main ./change-pass/main.go
+
+	GOOS=linux GOARCH=amd64 go build -o get-category-product/build/main ./get-category-product/main.go
+	GOOS=linux GOARCH=amd64 go build -o get-cp/build/main ./get-cp/main.go
+	GOOS=linux GOARCH=amd64 go build -o get-markets/build/main ./get-markets/main.go

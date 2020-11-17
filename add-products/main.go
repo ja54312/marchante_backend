@@ -17,11 +17,12 @@ import (
 )
 
 type RequestBody struct {
-	IDUser  int     `json:"id_user" bson:"id_user"`
-	IDRol   int     `json:"id_roll" bson:"id_roll"`
-	Name    string  `json:"name" bson:"name"`
-	PricePZ float32 `json:"price_pz" bson:"price_pz"`
-	PriceKG float32 `json:"price_kg" bson:"price_kg"`
+	IDUser       int     `json:"id_user" bson:"id_user"`
+	IDRol        int     `json:"id_roll" bson:"id_roll"`
+	CategoryType string  `json:"category_type" bson:"category_type"`
+	Name         string  `json:"name" bson:"name"`
+	PricePZ      float32 `json:"price_pz" bson:"price_pz"`
+	PriceKG      float32 `json:"price_kg" bson:"price_kg"`
 }
 
 type Response struct {
@@ -176,7 +177,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	currentTime := time.Now()
 	datetime := currentTime.Format("2006-01-02 15:04:05")
 
-	insert, err := db.Exec("INSERT INTO products (id_user, id_rol, name, price_pz, price_kg, created_at) VALUES (?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDRol, bodyData.Name, bodyData.PricePZ, bodyData.PriceKG, datetime)
+	insert, err := db.Exec("INSERT INTO products (id_user, id_rol, category_type, name, price_pz, price_kg, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDRol, bodyData.CategoryType, bodyData.Name, bodyData.PricePZ, bodyData.PriceKG, datetime)
 	if err != nil {
 		fmt.Println("error al insertar: ", err.Error())
 	}

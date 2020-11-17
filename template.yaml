@@ -302,6 +302,114 @@ Resources:
             Path: /change-pass
             Method: OPTIONS
 
+  GetCategoryProductFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: get-category-product/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /get-category-product/{type_category}
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: "mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com"
+          PORT_DB: "3306"
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+
+  GetCategoryProductCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-category-product/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /get-category-product/{type_category}
+            Method: OPTIONS
+
+  GetCPFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: get-cp/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /get-postal-code/{type_market}
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: "mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com"
+          PORT_DB: "3306"
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+
+  GetCPCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-cp/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /get-postal-code/{type_market}
+            Method: OPTIONS
+
+  GetMarketsFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: get-markets/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /get-cat-markets/{id_cp}
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: "mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com"
+          PORT_DB: "3306"
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+
+  GetMarketsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-markets/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /get-cat-markets/{id_cp}
+            Method: OPTIONS
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -337,3 +445,15 @@ Outputs:
   ChangePassAPI:
     Description: "API Gateway endpoint URL for Prod environment for First Function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/change-pass/"
+
+  GetCategoryProductAPI:
+    Description: "Obtener categorias de productos"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-category-product/"
+  
+  GetCPAPI:
+    Description: "Obtener codigos postales de mercados o tianguis"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-postal-code/"
+  
+  GetMarketsAPI:
+    Description: "Obtener tianguis o mercados"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-cat-markets/"

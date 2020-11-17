@@ -1,0 +1,12 @@
+# App specific
+add-products/build/
+change-pass/build/
+disabled-product/build/
+forgot-pass/build/
+get-category-product/build/
+get-cp/build/
+get-markets/build/
+get-products/build/
+login/build/
+register-user/build/
+update-products/build/
