@@ -299,7 +299,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return returnApiGateway(res, 400)
 	}
 
-	resultsData, err := db.Query("SELECT a.id, a.customer, a.type_market, a.zone, a.market, a.local, a.name, a.mail, b.nombre, b.redirect FROM users as a left join type_users as b on a.customer = b.id WHERE a.mail = ? and a.active = 1", user)
+	resultsData, err := db.Query("SELECT a.id, a.id_type_user, a.type_market, a.zone, a.market, a.local, a.name, a.mail, b.nombre, b.redirect FROM users as a left join type_users as b on a.id_type_user = b.id WHERE a.mail = ? and a.active = 1", user)
 	if err != nil {
 		var response Response
 		response.Success = false

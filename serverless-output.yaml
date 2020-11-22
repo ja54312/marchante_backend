@@ -12,7 +12,7 @@ Resources:
   RegisterUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/5d6079ad14cd7b1c437516853e041898
+      CodeUri: s3://bucketmarchante/6c075d210a585bee0dd9eb5184826621
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -35,7 +35,7 @@ Resources:
   RegisterUserCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/5d6079ad14cd7b1c437516853e041898
+      CodeUri: s3://bucketmarchante/6c075d210a585bee0dd9eb5184826621
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -82,7 +82,7 @@ Resources:
   AddProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/68f273d49cfccf79f528972e637f67a4
+      CodeUri: s3://bucketmarchante/bae739d25858801f7ba4e26af06e2941
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -205,7 +205,7 @@ Resources:
   ForgotPassFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/d304f77511893fe9d1c900956060d19b
+      CodeUri: s3://bucketmarchante/48680168a52cc22b390f7113e38802a6
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -271,6 +271,108 @@ Resources:
           Properties:
             Path: /change-pass
             Method: OPTIONS
+  GetCategoryProductFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/c6ee27c9b67cce1cac6f20831459f7b0
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-category-product/{type_category}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetCategoryProductCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/c6ee27c9b67cce1cac6f20831459f7b0
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-category-product/{type_category}
+            Method: OPTIONS
+  GetCPFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/2f805dcbbb5e6b32d4975349a206d839
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-postal-code/{type_market}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetCPCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/2f805dcbbb5e6b32d4975349a206d839
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-postal-code/{type_market}
+            Method: OPTIONS
+  GetMarketsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/817dbbfe9b57c5af61af54f293a78db9
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-cat-markets/{id_cp}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetMarketsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/817dbbfe9b57c5af61af54f293a78db9
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-cat-markets/{id_cp}
+            Method: OPTIONS
 Outputs:
   RegisterUserAPI:
     Description: API Gateway endpoint URL for Prod environment for First Function
@@ -304,3 +406,15 @@ Outputs:
     Description: API Gateway endpoint URL for Prod environment for First Function
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/change-pass/
+  GetCategoryProductAPI:
+    Description: Obtener categorias de productos
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-category-product/
+  GetCPAPI:
+    Description: Obtener codigos postales de mercados o tianguis
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-postal-code/
+  GetMarketsAPI:
+    Description: Obtener tianguis o mercados
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-cat-markets/

@@ -192,7 +192,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		results, err := db.Query("SELECT id, name FROM categories where type = ? and active = 1 ORDER BY id ASC", request.PathParameters["type_category"])
+		results, err := db.Query("SELECT id, name FROM category_products where type = ? and active = 1 ORDER BY id ASC", request.PathParameters["type_category"])
 		if err != nil {
 			panic(err)
 		}

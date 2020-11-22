@@ -3,6 +3,7 @@ add-products/build/
 change-pass/build/
 disabled-product/build/
 forgot-pass/build/
+get-associated-tenants/build
 get-category-product/build/
 get-cp/build/
 get-markets/build/

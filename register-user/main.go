@@ -189,7 +189,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return returnApiGateway(response, 400)
 	}
 
-	insert, err := db.Exec("INSERT INTO users (customer, type_market, zone, market, local, name, mail, pass, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", bodyData.Customer, bodyData.TypeMarket, bodyData.Zone, bodyData.Market, bodyData.Local, bodyData.Name, bodyData.Mail, bodyData.Pass, bodyData.CreatedAt)
+	insert, err := db.Exec("INSERT INTO users (id_type_user, type_market, zone, market, local, name, mail, pass, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", bodyData.Customer, bodyData.TypeMarket, bodyData.Zone, bodyData.Market, bodyData.Local, bodyData.Name, bodyData.Mail, bodyData.Pass, bodyData.CreatedAt)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
