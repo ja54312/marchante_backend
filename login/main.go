@@ -43,7 +43,7 @@ type DataUser struct {
 	Customer     int    `json:"id_rol,omitempty" bson:"id_rol"`
 	TypeMarket   string `json:"type_market,omitempty" bson:"type_market"`
 	Zone         string `json:"zone,omitempty" bson:"zone"`
-	Market       string `json:"market,omitempty" bson:"market"`
+	Market       int    `json:"id_market,omitempty" bson:"id_market"`
 	Local        string `json:"local,omitempty" bson:"local"`
 	NameUser     string `json:"name_user,omitempty" bson:"name_user"`
 	Mail         string `json:"mail,omitempty" bson:"mail"`
@@ -299,11 +299,11 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return returnApiGateway(res, 400)
 	}
 
-	resultsData, err := db.Query("SELECT a.id, a.id_type_user, a.type_market, a.zone, a.market, a.local, a.name, a.mail, b.nombre, b.redirect FROM users as a left join type_users as b on a.id_type_user = b.id WHERE a.mail = ? and a.active = 1", user)
+	resultsData, err := db.Query("SELECT a.id, a.id_type_user, a.type_market, a.zone, a.id_market, a.local, a.name, a.mail, b.nombre, b.redirect FROM users as a left join type_users as b on a.id_type_user = b.id WHERE a.mail = ? and a.active = 1", user)
 	if err != nil {
 		var response Response
 		response.Success = false
-		response.Message = "No existen datos para esta consulta"
+		response.Message = "No existen datos para esta consulta, verifique su solicitud."
 		return returnApiGateway(response, 400)
 	}
 

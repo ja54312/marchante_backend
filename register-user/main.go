@@ -22,7 +22,7 @@ type RequestBody struct {
 	Customer   string `json:"customer" bson:"customer"`
 	TypeMarket string `json:"type_market" bson:"type_market"`
 	Zone       string `json:"zone" bson:"zone"`
-	Market     string `json:"market" bson:"market"`
+	Market     int    `json:"id_market" bson:"id_market"`
 	Local      string `json:"local" bson:"local"`
 	Name       string `json:"name" bson:"name"`
 	Mail       string `json:"mail" bson:"mail"`
@@ -63,16 +63,6 @@ func hashAndSalt(pwd []byte) string {
 	}
 	return string(hash)
 }
-
-/*func comparePasswords(hashedPwd string, plainPwd []byte) bool {
-	byteHash := []byte(hashedPwd)
-	err := bcrypt.CompareHashAndPassword(byteHash, plainPwd)
-	if err != nil {
-		log.Println(err)
-		return false
-	}
-	return true
-}*/
 
 func returnApiGateway(r Response, st int) (events.APIGatewayProxyResponse, error) {
 	resInBytes := returnArrayBytes(r)
@@ -189,7 +179,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return returnApiGateway(response, 400)
 	}
 
-	insert, err := db.Exec("INSERT INTO users (id_type_user, type_market, zone, market, local, name, mail, pass, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", bodyData.Customer, bodyData.TypeMarket, bodyData.Zone, bodyData.Market, bodyData.Local, bodyData.Name, bodyData.Mail, bodyData.Pass, bodyData.CreatedAt)
+	insert, err := db.Exec("INSERT INTO users (id_type_user, type_market, zone, id_market, local, name, mail, pass, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", bodyData.Customer, bodyData.TypeMarket, bodyData.Zone, bodyData.Market, bodyData.Local, bodyData.Name, bodyData.Mail, bodyData.Pass, bodyData.CreatedAt)
 	if err != nil {
 		fmt.Println(err.Error())
 	}

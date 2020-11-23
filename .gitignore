@@ -7,6 +7,7 @@ get-associated-tenants/build
 get-category-product/build/
 get-cp/build/
 get-markets/build/
+get-markets-register/build/
 get-products/build/
 login/build/
 register-user/build/

@@ -12,7 +12,7 @@ Resources:
   RegisterUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/6c075d210a585bee0dd9eb5184826621
+      CodeUri: s3://bucketmarchante/a90f9c52f960b442fee7ea4d2279426c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -35,7 +35,7 @@ Resources:
   RegisterUserCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/6c075d210a585bee0dd9eb5184826621
+      CodeUri: s3://bucketmarchante/a90f9c52f960b442fee7ea4d2279426c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -48,7 +48,7 @@ Resources:
   LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/0a474a185e08f671b1809146b4e3b8a5
+      CodeUri: s3://bucketmarchante/e3580bbad771cd7c5c407138cdc085ff
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -69,7 +69,7 @@ Resources:
   LoginCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/0a474a185e08f671b1809146b4e3b8a5
+      CodeUri: s3://bucketmarchante/e3580bbad771cd7c5c407138cdc085ff
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -82,7 +82,7 @@ Resources:
   AddProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/bae739d25858801f7ba4e26af06e2941
+      CodeUri: s3://bucketmarchante/979a8fce206c9cd96134a9347cd29f0f
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -274,7 +274,7 @@ Resources:
   GetCategoryProductFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/c6ee27c9b67cce1cac6f20831459f7b0
+      CodeUri: s3://bucketmarchante/3b0105414a7372a28acc3c3795119e07
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -295,7 +295,7 @@ Resources:
   GetCategoryProductCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/c6ee27c9b67cce1cac6f20831459f7b0
+      CodeUri: s3://bucketmarchante/3b0105414a7372a28acc3c3795119e07
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -373,6 +373,74 @@ Resources:
           Properties:
             Path: /get-cat-markets/{id_cp}
             Method: OPTIONS
+  GetAssociatedTenantsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/0faeb69072269435f61e19d6d8074c3d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-associated-tenants
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetAssociatedTenantsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/0faeb69072269435f61e19d6d8074c3d
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-associated-tenants
+            Method: OPTIONS
+  GetMarketsRegisterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/8361f22a3d84ed8eb45e2f2e978bc178
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-markets-register/{type_market}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetMarketsRegisterCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/8361f22a3d84ed8eb45e2f2e978bc178
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-markets-register/{type_market}
+            Method: OPTIONS
 Outputs:
   RegisterUserAPI:
     Description: API Gateway endpoint URL for Prod environment for First Function
@@ -418,3 +486,11 @@ Outputs:
     Description: Obtener tianguis o mercados
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-cat-markets/
+  GetAssociatedTenantsAPI:
+    Description: Obtener locatarios asociados a un tipo de producto
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-associated-tenants/
+  GetMarketsRegisterAPI:
+    Description: "Obtener mercados \xF3 tianguis en la secci\xF3n de registro"
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-markets-register/
