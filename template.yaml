@@ -482,6 +482,42 @@ Resources:
             Path: /get-markets-register/{type_market}
             Method: OPTIONS
 
+  GetProductsByCategoryFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: get-products-by-category-product/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /get-products-by-category/{id_user}/{id_category}
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: "mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com"
+          PORT_DB: "3306"
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+
+  GetProductsByCategoryCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-products-by-category-product/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /get-products-by-category/{id_user}/{id_category}
+            Method: OPTIONS
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -537,3 +573,7 @@ Outputs:
   GetMarketsRegisterAPI:
     Description: "Obtener mercados ó tianguis en la sección de registro"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-markets-register/"
+
+  GetProductsByCategoryAPI:
+    Description: "Obtener productos de locatario filtrado por id_usuario e id_categoria"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products-by-category/"

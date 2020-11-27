@@ -12,3 +12,4 @@ get-products/build/
 login/build/
 register-user/build/
 update-products/build/
+get-products-by-category-product/build
