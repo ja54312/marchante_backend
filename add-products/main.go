@@ -20,6 +20,7 @@ type RequestBody struct {
 	IDUser       int     `json:"id_user" bson:"id_user"`
 	IDRol        int     `json:"id_roll" bson:"id_roll"`
 	CategoryType int     `json:"id_type_category" bson:"id_type_category"`
+	IDMarket     int     `json:"id_market" bson:"id_market"`
 	Name         string  `json:"name" bson:"name"`
 	PricePZ      float32 `json:"price_pz" bson:"price_pz"`
 	PriceKG      float32 `json:"price_kg" bson:"price_kg"`
@@ -177,7 +178,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	currentTime := time.Now()
 	datetime := currentTime.Format("2006-01-02 15:04:05")
 
-	insert, err := db.Exec("INSERT INTO products (id_user, id_rol, id_type_category, name, price_pz, price_kg, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDRol, bodyData.CategoryType, bodyData.Name, bodyData.PricePZ, bodyData.PriceKG, datetime)
+	insert, err := db.Exec("INSERT INTO products (id_user, id_rol, id_type_category, id_market, name, price_pz, price_kg, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDRol, bodyData.CategoryType, bodyData.IDMarket, bodyData.Name, bodyData.PricePZ, bodyData.PriceKG, datetime)
 	if err != nil {
 		fmt.Println("error al insertar: ", err.Error())
 	}

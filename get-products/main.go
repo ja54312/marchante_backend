@@ -24,11 +24,13 @@ type ResponseGeneral struct {
 }
 
 type Row struct {
-	IDProduct int     `json:"id_product"`
-	Name      string  `json:"name"`
-	PricePZ   float32 `json:"price_pz"`
-	PriceKG   float32 `json:"price_kg"`
-	Active    int     `json:"active"`
+	IDProduct  int     `json:"id_product"`
+	Name       string  `json:"name"`
+	PricePZ    float32 `json:"price_pz"`
+	PriceKG    float32 `json:"price_kg"`
+	Active     int     `json:"active"`
+	IDMarket   int     `json:"id_market"`
+	NameMarket string  `json:"name_market"`
 }
 
 type Response struct {
@@ -195,14 +197,21 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		results, err := db.Query("SELECT id, name, price_pz, price_kg, active FROM products where id_user = ?", request.PathParameters["id_user"])
+		var results *sql.Rows
+
+		if request.PathParameters["id_market"] != "" {
+			results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ?", request.PathParameters["id_user"], request.PathParameters["id_market"])
+		} else {
+			results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ?", request.PathParameters["id_user"])
+		}
+
 		if err != nil {
 			panic(err)
 		}
 
 		for results.Next() {
 			var row Row
-			err = results.Scan(&row.IDProduct, &row.Name, &row.PricePZ, &row.PriceKG, &row.Active)
+			err = results.Scan(&row.IDProduct, &row.Name, &row.PricePZ, &row.PriceKG, &row.Active, &row.IDMarket, &row.NameMarket)
 			if err != nil {
 				panic(err.Error())
 			}
