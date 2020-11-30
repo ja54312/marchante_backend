@@ -59,7 +59,8 @@ func returnApiGateway(r ResponseGeneral, st int) (events.APIGatewayProxyResponse
 		Headers: map[string]string{
 			"Access-Control-Allow-Origin":  "*",
 			"Access-Control-Allow-Methods": "*",
-			"Access-Control-Allow-Headers": "authorization, content-type",
+			//"Access-Control-Allow-Headers": "authorization, content-type",
+			"Access-Control-Allow-Headers": "*",
 		},
 		Body:       fmt.Sprintf(string(resInBytes)),
 		StatusCode: st,
@@ -208,7 +209,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			results, err := db.Query("SELECT a.id_user, b.id_type_user, b.zone, b.id_market, b.local, b.name FROM products as a left join users as b on a.id_user = b.id where a.id_type_category = ? and b.active = 1 and id_market = ? GROUP BY a.id_user ORDER BY a.id ASC", response.Rows[i].IDCategory, bodyData.IDMarket)
+			results, err := db.Query("SELECT b.id, b.id_type_user, b.zone, b.id_market, b.local, b.name FROM products as a left join users as b on a.id_user = b.id where a.id_type_category = ? and a.active = 1 and b.id_market = ? GROUP BY a.id_user ORDER BY a.id ASC", response.Rows[i].IDCategory, bodyData.IDMarket)
 			if err != nil {
 				panic(err)
 			}

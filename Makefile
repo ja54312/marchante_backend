@@ -22,3 +22,4 @@ build:
 	GOOS=linux GOARCH=amd64 go build -o get-markets-register/build/main ./get-markets-register/main.go
 
 	GOOS=linux GOARCH=amd64 go build -o get-products-by-category-product/build/main ./get-products-by-category-product/main.go
+	GOOS=linux GOARCH=amd64 go build -o create-order/build/main ./create-order/main.go

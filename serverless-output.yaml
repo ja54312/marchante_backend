@@ -82,7 +82,7 @@ Resources:
   AddProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/979a8fce206c9cd96134a9347cd29f0f
+      CodeUri: s3://bucketmarchante/ffc5af172992dd46c05b7e01ed518e93
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -103,7 +103,7 @@ Resources:
   AddProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/5582e1ef645fbdbbe025afdbdef98b3d
+      CodeUri: s3://bucketmarchante/ffc5af172992dd46c05b7e01ed518e93
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -111,12 +111,46 @@ Resources:
         CatchAll:
           Type: Api
           Properties:
-            Path: /get-products/{id_user}
+            Path: /add-products
             Method: OPTIONS
   GetProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/5582e1ef645fbdbbe025afdbdef98b3d
+      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}/{id_market}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetProductsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}/{id_market}
+            Method: OPTIONS
+  GetAllProductsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -134,6 +168,19 @@ Resources:
           PORT_DB: '3306'
           NAME_DB: marchante
           KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetAllProductsCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}
+            Method: OPTIONS
   UpdateProductFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -376,7 +423,7 @@ Resources:
   GetAssociatedTenantsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/0faeb69072269435f61e19d6d8074c3d
+      CodeUri: s3://bucketmarchante/1b2b8107ba4db7bfd6d2609b7d30193d
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -397,7 +444,7 @@ Resources:
   GetAssociatedTenantsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/0faeb69072269435f61e19d6d8074c3d
+      CodeUri: s3://bucketmarchante/1b2b8107ba4db7bfd6d2609b7d30193d
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -440,6 +487,40 @@ Resources:
           Type: Api
           Properties:
             Path: /get-markets-register/{type_market}
+            Method: OPTIONS
+  GetProductsByCategoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/86965ead14d5b80848b934a16b2d4839
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products-by-category/{id_user}/{id_category}/{id_market}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetProductsByCategoryCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/86965ead14d5b80848b934a16b2d4839
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products-by-category/{id_user}/{id_category}/{id_market}
             Method: OPTIONS
 Outputs:
   RegisterUserAPI:
@@ -494,3 +575,7 @@ Outputs:
     Description: "Obtener mercados \xF3 tianguis en la secci\xF3n de registro"
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-markets-register/
+  GetProductsByCategoryAPI:
+    Description: Obtener productos de locatario filtrado por id_usuario e id_categoria
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products-by-category/
