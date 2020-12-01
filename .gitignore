@@ -1,6 +1,7 @@
 # App specific
 add-products/build/
 change-pass/build/
+create-order/build/
 disabled-product/build/
 forgot-pass/build/
 get-associated-tenants/build
@@ -13,3 +14,4 @@ login/build/
 register-user/build/
 update-products/build/
 get-products-by-category-product/build
+list-orders-clients/build/

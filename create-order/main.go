@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -17,12 +18,9 @@ import (
 )
 
 type RequestBody struct {
-	IDUser    int     `json:"id_user" bson:"id_user"`
-	IDProduct int     `json:"id_product" bson:"id_product"`
-	IDMarket  int     `json:"id_market" bson:"id_market"`
-	Quantity  float32 `json:"quantity" bson:"quantity"`
-	PricePZ   float32 `json:"price_pz" bson:"price_pz"`
-	PriceKG   float32 `json:"price_kg" bson:"price_kg"`
+	IDUser   int           `json:"id_user" bson:"id_user"`
+	IDMarket int           `json:"id_market" bson:"id_market"`
+	Cart     []CartProduct `json:"cart" bson:"cart"`
 }
 
 type Response struct {
@@ -31,12 +29,12 @@ type Response struct {
 	Message string `json:"msg" bson:"msg"`
 }
 
-type Product struct {
+type CartProduct struct {
+	IDTenant  int     `json:"id_tenant" bson:"id_tenant"`
 	IDProduct int     `json:"id_product" bson:"id_product"`
-	Name      string  `json:"name" bson:"name"`
-	Type      string  `json:"type" bson:"type"`
-	Count     int     `json:"count" bson:"count"`
-	Price     float32 `json:"price" bson:"price"`
+	Quantity  float32 `json:"quantity" bson:"quantity"`
+	PricePZ   float32 `json:"price_pz" bson:"price_pz"`
+	PriceKG   float32 `json:"price_kg" bson:"price_kg"`
 }
 
 func returnArrayBytes(response Response) []byte {
@@ -183,18 +181,30 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 	defer db.Close()
 
+	var wg sync.WaitGroup
 	currentTime, _ := CurrentTimeMex(time.Now(), "America/Mexico_City")
 	datetime := currentTime.Format("2006-01-02 15:04:05")
-	var total float32
+	var totalOrder float32
 
-	if bodyData.PricePZ > 0 {
-		total = bodyData.PricePZ * bodyData.Quantity
-	}
-	if bodyData.PriceKG > 0 {
-		total = bodyData.PriceKG * bodyData.Quantity
-	}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for i := range bodyData.Cart {
+			var subtotal float32
 
-	insert, err := db.Exec("INSERT INTO orders (id_user, id_product, id_market, quantity, price_pz, price_kg, total, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDProduct, bodyData.IDMarket, bodyData.Quantity, bodyData.PricePZ, bodyData.PriceKG, total, datetime)
+			if bodyData.Cart[i].PricePZ > 0 {
+				subtotal = bodyData.Cart[i].PricePZ * bodyData.Cart[i].Quantity
+			}
+			if bodyData.Cart[i].PriceKG > 0 {
+				subtotal = bodyData.Cart[i].PriceKG * bodyData.Cart[i].Quantity
+			}
+
+			totalOrder += subtotal
+		}
+	}()
+	wg.Wait()
+
+	insert, err := db.Exec("INSERT INTO orders (id_user, id_market, total, created_at) VALUES (?, ?, ?, ?)", bodyData.IDUser, bodyData.IDMarket, totalOrder, datetime)
 	if err != nil {
 		fmt.Println("error al insertar: ", err.Error())
 	}
@@ -206,6 +216,32 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		res.Success = false
 		res.Message = "La orden no se ha podido guardar"
 		return returnApiGateway(res, 400)
+	}
+
+	for i := range bodyData.Cart {
+		wg.Add(1)
+
+		go func() {
+			defer wg.Done()
+			var total float32
+
+			if bodyData.Cart[i].PricePZ > 0 {
+				total = bodyData.Cart[i].PricePZ * bodyData.Cart[i].Quantity
+			}
+			if bodyData.Cart[i].PriceKG > 0 {
+				total = bodyData.Cart[i].PriceKG * bodyData.Cart[i].Quantity
+			}
+			insertDetail, err := db.Exec("INSERT INTO detail_order (id_order, id_tenant, id_product, quantity, price_pz, price_kg, total) VALUES (?, ?, ?, ?, ?, ?, ?)", last, bodyData.Cart[i].IDTenant, bodyData.Cart[i].IDProduct, bodyData.Cart[i].Quantity, bodyData.Cart[i].PricePZ, bodyData.Cart[i].PriceKG, total)
+			if err != nil {
+				fmt.Println("error al insertar: ", err.Error())
+			}
+			lastIDDetail, _ := insertDetail.LastInsertId()
+			if lastIDDetail <= 0 {
+				fmt.Println("error al insertar el detalle de orden ", last)
+			}
+		}()
+
+		wg.Wait()
 	}
 
 	var res Response

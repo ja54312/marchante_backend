@@ -23,3 +23,5 @@ build:
 
 	GOOS=linux GOARCH=amd64 go build -o get-products-by-category-product/build/main ./get-products-by-category-product/main.go
 	GOOS=linux GOARCH=amd64 go build -o create-order/build/main ./create-order/main.go
+	GOOS=linux GOARCH=amd64 go build -o list-orders-clients/build/main ./list-orders-clients/main.go
+	GOOS=linux GOARCH=amd64 go build -o list-order-tenant/build/main ./list-order-tenant/main.go
