@@ -199,8 +199,13 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		defer wg.Done()
 		var results *sql.Rows
 
+		//Si obtiene el parametro id_market e id_category
 		if request.PathParameters["id_market"] != "" {
-			results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ?", request.PathParameters["id_user"], request.PathParameters["id_market"])
+			if request.PathParameters["id_category"] != "" {
+				results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ? and id_type_category = ?", request.PathParameters["id_user"], request.PathParameters["id_market"], request.PathParameters["id_category"])
+			} else {
+				results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ?", request.PathParameters["id_user"], request.PathParameters["id_market"])
+			}
 		} else {
 			results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ?", request.PathParameters["id_user"])
 		}

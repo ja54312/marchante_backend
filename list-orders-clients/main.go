@@ -24,13 +24,25 @@ type ResponseGeneral struct {
 }
 
 type Row struct {
-	IDOrder    int     `json:"id_order"`
-	Total      float32 `json:"total"`
-	CreatedAt  string  `json:"created_at"`
-	TypeMarket string  `json:"type_market"`
-	NameMarket string  `json:"name_market"`
-	IDStatus   int     `json:"id_status"`
-	NameStatus string  `json:"name_status"`
+	IDOrder    int           `json:"id_order"`
+	Total      float32       `json:"total"`
+	CreatedAt  string        `json:"created_at"`
+	TypeMarket string        `json:"type_market"`
+	NameMarket string        `json:"name_market"`
+	IDStatus   int           `json:"id_status"`
+	NameStatus string        `json:"name_status"`
+	Detail     []DetailOrder `json:"detail_order"`
+}
+
+type DetailOrder struct {
+	IDTenant    int     `json:"id_tenant"`
+	IDProduct   int     `json:"id_product"`
+	Quantity    float32 `json:"quantity"`
+	PricePZ     float32 `json:"price_pz"`
+	PriceKG     float32 `json:"price_kg"`
+	NameTenant  string  `json:"name_tenant"`
+	NameProduct string  `json:"name_product"`
+	Subtotal    float32 `json:"subtotal"`
 }
 
 type Response struct {
@@ -220,6 +232,28 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		res.Message = "No se encontraron datos"
 		return returnApiGateway(res, 200)
 	}
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for i := range response.Rows {
+			resultsDetail, err := db.Query("SELECT a.id_tenant, a.id_product, a.quantity, a.price_pz, a.price_kg, b.name, c.name, a.total  FROM detail_order as a left join users as b on a.id_tenant = b.id left join products as c on a.id_product = c.id WHERE a.id_order = ? ORDER BY a.id ASC", response.Rows[i].IDOrder)
+			if err != nil {
+				panic(err)
+			}
+
+			for resultsDetail.Next() {
+				var detail DetailOrder
+				err = resultsDetail.Scan(&detail.IDTenant, &detail.IDProduct, &detail.Quantity, &detail.PricePZ, &detail.PriceKG, &detail.NameTenant, &detail.NameProduct, &detail.Subtotal)
+				if err != nil {
+					panic(err.Error())
+				}
+				response.Rows[i].Detail = append(response.Rows[i].Detail, detail)
+			}
+		}
+	}()
+
+	wg.Wait()
 
 	response.Success = true
 	return returnApiGatewayGeneral(response, 200)

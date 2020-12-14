@@ -121,6 +121,42 @@ Resources:
             Path: /add-products
             Method: OPTIONS
 
+  GetProductsByCaterogyFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: get-products/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /get-products/{id_user}/{id_market}/{id_category}
+            Method: GET
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: "mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com"
+          PORT_DB: "3306"
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+
+  GetProductsByCaterogyCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: get-products/build/
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active 
+      Events:
+        CatchAll:
+          Type: Api 
+          Properties:
+            Path: /get-products/{id_user}/{id_market}/{id_category}
+            Method: OPTIONS
+
   GetProductsFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -679,7 +715,7 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/add-products/"
 
   GetProductsAPI:
-    Description: "API Gateway endpoint URL for Prod environment for First Function"
+    Description: "Obtiene los productos por usuario, por mercado o tianguis y por categoria del producto"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products/"
 
   UpdateProductsAPI:

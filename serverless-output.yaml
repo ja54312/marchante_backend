@@ -113,10 +113,44 @@ Resources:
           Properties:
             Path: /add-products
             Method: OPTIONS
+  GetProductsByCaterogyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}/{id_market}/{id_category}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  GetProductsByCaterogyCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-products/{id_user}/{id_market}/{id_category}
+            Method: OPTIONS
   GetProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -137,7 +171,7 @@ Resources:
   GetProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -150,7 +184,7 @@ Resources:
   GetAllProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -171,7 +205,7 @@ Resources:
   GetAllProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/24d46763066514550e5375fb1c5b33a3
+      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -522,6 +556,108 @@ Resources:
           Properties:
             Path: /get-products-by-category/{id_user}/{id_category}/{id_market}
             Method: OPTIONS
+  CreateOrderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/ff8a18c28a08eea298b0a857ade95ff1
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /create-order
+            Method: POST
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  CreateOrderCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/ff8a18c28a08eea298b0a857ade95ff1
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /create-order
+            Method: OPTIONS
+  ListOrdersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/4f1de3074c578c293f3918ffd4c80ec7
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /list-orders-clients/{id_user}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  ListOrdersCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/4f1de3074c578c293f3918ffd4c80ec7
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /list-orders-clients/{id_user}
+            Method: OPTIONS
+  ListOrdersTenantFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/22602fb853b97d9692c72bcdbf19baf3
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /list-order-tenant/{id_tenant}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  ListOrdersTenantCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/22602fb853b97d9692c72bcdbf19baf3
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /list-order-tenant/{id_tenant}
+            Method: OPTIONS
 Outputs:
   RegisterUserAPI:
     Description: API Gateway endpoint URL for Prod environment for First Function
@@ -536,7 +672,8 @@ Outputs:
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/add-products/
   GetProductsAPI:
-    Description: API Gateway endpoint URL for Prod environment for First Function
+    Description: Obtiene los productos por usuario, por mercado o tianguis y por categoria
+      del producto
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products/
   UpdateProductsAPI:
@@ -579,3 +716,16 @@ Outputs:
     Description: Obtener productos de locatario filtrado por id_usuario e id_categoria
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-products-by-category/
+  CreateOrderAPI:
+    Description: Crea orden
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create-order/
+  ListOrdersAPI:
+    Description: Lista las ordenes de los clientes (no se puede hacer una orden con
+      mas de una mercado o tianguis asociado)
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/list-orders-clients/
+  ListOrdersTenantAPI:
+    Description: Lista los pedidos de los locatarios a traves del id_tenant(id_locatario)
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/list-order-tenant/

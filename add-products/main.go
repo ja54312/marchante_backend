@@ -123,6 +123,14 @@ func getAndCheckToken(request events.APIGatewayProxyRequest) error {
 	return nil
 }
 
+func CurrentTimeMex(t time.Time, name string) (time.Time, error) {
+	loc, err := time.LoadLocation(name)
+	if err == nil {
+		t = t.In(loc)
+	}
+	return t, err
+}
+
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	if request.HTTPMethod == "OPTIONS" {
 		var response Response
@@ -175,7 +183,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 	defer db.Close()
 
-	currentTime := time.Now()
+	//currentTime := time.Now()
+	currentTime, _ := CurrentTimeMex(time.Now(), "America/Mexico_City")
 	datetime := currentTime.Format("2006-01-02 15:04:05")
 
 	insert, err := db.Exec("INSERT INTO products (id_user, id_rol, id_type_category, id_market, name, price_pz, price_kg, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", bodyData.IDUser, bodyData.IDRol, bodyData.CategoryType, bodyData.IDMarket, bodyData.Name, bodyData.PricePZ, bodyData.PriceKG, datetime)

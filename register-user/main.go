@@ -77,6 +77,14 @@ func returnApiGateway(r Response, st int) (events.APIGatewayProxyResponse, error
 	}, nil
 }
 
+func CurrentTimeMex(t time.Time, name string) (time.Time, error) {
+	loc, err := time.LoadLocation(name)
+	if err == nil {
+		t = t.In(loc)
+	}
+	return t, err
+}
+
 func sendMail(to []string, typeUser string) bool {
 	host, ok := os.LookupEnv("HOST_MAIL")
 	if !ok {
@@ -151,7 +159,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 	defer db.Close()
 
-	currentTime := time.Now()
+	currentTime, _ := CurrentTimeMex(time.Now(), "America/Mexico_City")
+	//currentTime := time.Now()
 	bodyData.CreatedAt = currentTime.Format("2006-01-02 15:04:05")
 
 	psw1 := getPass(bodyData.Pass)
