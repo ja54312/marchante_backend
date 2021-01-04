@@ -17,7 +17,6 @@ import (
 )
 
 type RequestBody struct {
-	//IDCP       int `json:"id_cp" bson:"id_cp"`
 	IDMarket   int    `json:"id_market" bson:"id_market"`
 	TypeMarket string `json:"type_market" bson:"type_market"`
 }
@@ -31,7 +30,9 @@ type ResponseGeneral struct {
 type Row struct {
 	IDCategory   int       `json:"id_category"`
 	Name         string    `json:"name"`
-	TenantsArray []Tenants `json:"tenants_array" bson:"tenants_array"`
+	Icon1        string    `json:"icon_1,omitempty"`
+	Icon2        string    `json:"icon_2,omitempty"`
+	TenantsArray []Tenants `json:"tenants_array,omitempty" bson:"tenants_array"`
 }
 
 //id_tenant == id_user
@@ -187,14 +188,14 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		results, err := db.Query("SELECT id, name FROM category_products where type = ? and active = 1 ORDER BY id ASC", bodyData.TypeMarket)
+		results, err := db.Query("SELECT id, name, icon_1, icon_2 FROM category_products where type = ? and active = 1 ORDER BY id ASC", bodyData.TypeMarket)
 		if err != nil {
 			panic(err)
 		}
 
 		for results.Next() {
 			var row Row
-			err = results.Scan(&row.IDCategory, &row.Name)
+			err = results.Scan(&row.IDCategory, &row.Name, &row.Icon1, &row.Icon2)
 			if err != nil {
 				panic(err.Error())
 			}

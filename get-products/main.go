@@ -203,15 +203,20 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		if request.PathParameters["id_market"] != "" {
 			if request.PathParameters["id_category"] != "" {
 				results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ? and id_type_category = ?", request.PathParameters["id_user"], request.PathParameters["id_market"], request.PathParameters["id_category"])
+				if err != nil {
+					fmt.Println("first error")
+				}
 			} else {
 				results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ? and a.id_market = ?", request.PathParameters["id_user"], request.PathParameters["id_market"])
+				if err != nil {
+					fmt.Println("second error")
+				}
 			}
 		} else {
 			results, err = db.Query("SELECT a.id, a.name, a.price_pz, a.price_kg, a.active, a.id_market, b.name FROM products as a left join cat_markets as b on a.id_market = b.id where a.id_user = ?", request.PathParameters["id_user"])
-		}
-
-		if err != nil {
-			panic(err)
+			if err != nil {
+				fmt.Println("third error")
+			}
 		}
 
 		for results.Next() {

@@ -231,7 +231,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			if bodyData.Cart[i].PriceKG > 0 {
 				total = bodyData.Cart[i].PriceKG * bodyData.Cart[i].Quantity
 			}
-			insertDetail, err := db.Exec("INSERT INTO detail_order (id_order, id_tenant, id_product, quantity, price_pz, price_kg, total) VALUES (?, ?, ?, ?, ?, ?, ?)", last, bodyData.Cart[i].IDTenant, bodyData.Cart[i].IDProduct, bodyData.Cart[i].Quantity, bodyData.Cart[i].PricePZ, bodyData.Cart[i].PriceKG, total)
+			insertDetail, err := db.Exec("INSERT INTO detail_order (id_order, id_tenant, id_customer, id_product, quantity, price_pz, price_kg, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", last, bodyData.Cart[i].IDTenant, bodyData.IDUser, bodyData.Cart[i].IDProduct, bodyData.Cart[i].Quantity, bodyData.Cart[i].PricePZ, bodyData.Cart[i].PriceKG, total)
 			if err != nil {
 				fmt.Println("error al insertar: ", err.Error())
 			}

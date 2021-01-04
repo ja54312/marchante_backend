@@ -15,3 +15,4 @@ register-user/build/
 update-products/build/
 get-products-by-category-product/build
 list-orders-clients/build/
+verify-code/build/

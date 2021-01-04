@@ -12,7 +12,7 @@ Resources:
   RegisterUserFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/a90f9c52f960b442fee7ea4d2279426c
+      CodeUri: s3://bucketmarchante/fdb1aead29abbfced25691d4ca20431f
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -35,7 +35,7 @@ Resources:
   RegisterUserCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/a90f9c52f960b442fee7ea4d2279426c
+      CodeUri: s3://bucketmarchante/fdb1aead29abbfced25691d4ca20431f
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -82,7 +82,7 @@ Resources:
   AddProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/ffc5af172992dd46c05b7e01ed518e93
+      CodeUri: s3://bucketmarchante/1dfb3727d792f923a8ca585e0990d449
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -103,7 +103,7 @@ Resources:
   AddProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/ffc5af172992dd46c05b7e01ed518e93
+      CodeUri: s3://bucketmarchante/1dfb3727d792f923a8ca585e0990d449
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -116,7 +116,7 @@ Resources:
   GetProductsByCaterogyFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -137,7 +137,7 @@ Resources:
   GetProductsByCaterogyCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -150,7 +150,7 @@ Resources:
   GetProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -171,7 +171,7 @@ Resources:
   GetProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -184,7 +184,7 @@ Resources:
   GetAllProductsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -205,7 +205,7 @@ Resources:
   GetAllProductsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/05c0cb5644215ba8135cd4389e954835
+      CodeUri: s3://bucketmarchante/6cfb44433ffaf1fc488d9e34a482df0c
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -457,7 +457,7 @@ Resources:
   GetAssociatedTenantsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/1b2b8107ba4db7bfd6d2609b7d30193d
+      CodeUri: s3://bucketmarchante/d2b1582dd846b2b53e936a716107a1d1
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -478,7 +478,7 @@ Resources:
   GetAssociatedTenantsCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/1b2b8107ba4db7bfd6d2609b7d30193d
+      CodeUri: s3://bucketmarchante/d2b1582dd846b2b53e936a716107a1d1
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -559,7 +559,7 @@ Resources:
   CreateOrderFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/ff8a18c28a08eea298b0a857ade95ff1
+      CodeUri: s3://bucketmarchante/b8e9f15aae3c771a3cfd03b29bf08b80
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -580,7 +580,7 @@ Resources:
   CreateOrderCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/ff8a18c28a08eea298b0a857ade95ff1
+      CodeUri: s3://bucketmarchante/b8e9f15aae3c771a3cfd03b29bf08b80
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -627,7 +627,7 @@ Resources:
   ListOrdersTenantFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/22602fb853b97d9692c72bcdbf19baf3
+      CodeUri: s3://bucketmarchante/ef09b932f8d0f7436c8221356c1319f7
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -648,7 +648,7 @@ Resources:
   ListOrdersTenantCors:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://bucketmarchante/22602fb853b97d9692c72bcdbf19baf3
+      CodeUri: s3://bucketmarchante/ef09b932f8d0f7436c8221356c1319f7
       Handler: main
       Runtime: go1.x
       Tracing: Active
@@ -657,6 +657,40 @@ Resources:
           Type: Api
           Properties:
             Path: /list-order-tenant/{id_tenant}
+            Method: OPTIONS
+  VerifyCodeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/a0132dd07c45e826a5141fedf37004ad
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /verify-code-pass/{code}
+            Method: GET
+      Environment:
+        Variables:
+          USER_DB: admin
+          PASSWORD_DB: mARchant3
+          HOST_DB: mimarchanteinstance.c9qv7s01ybr2.us-east-2.rds.amazonaws.com
+          PORT_DB: '3306'
+          NAME_DB: marchante
+          KEY_JWT: 777tThZ-68V57rmQaPTs4tyx-yjlWfHbb_xEXU72giMEKNP0oJcoJKrs5GLfIlw_dRfz23fV45Nb8LJbovlGvepmw0ShXMMBKnNi9BAu7U8JHsa7lTMMbGB6vOuiEjCQn8vxQx-lVowxtoGFFwuOUwv7BVwaz3u_S6vERHEOJT_K4-N-kHFHAAWSdHnq3xUwjsRBh6SV9RnrL5RSNaVda25Gb%h_]1lHfOp_YTUEBffwEbH47[5=KAV-vXKEm1_onyqAQEcyVI6y4r--l2sXh19sllSPy3FMoGAmXAxAjg6vIE666njAVKTn1C_iCVG7ZdBaolWohEr_TLBpem7q-QvZfyqNrlshvc_gqOdX54WrY
+  VerifyCodeCors:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://bucketmarchante/a0132dd07c45e826a5141fedf37004ad
+      Handler: main
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /verify-code-pass/{code}
             Method: OPTIONS
 Outputs:
   RegisterUserAPI:
@@ -729,3 +763,8 @@ Outputs:
     Description: Lista los pedidos de los locatarios a traves del id_tenant(id_locatario)
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/list-order-tenant/
+  VerifyCodeAPI:
+    Description: "Verifica el c\xF3digo de actualizaci\xF3n de cambio de contrase\xF1\
+      a"
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/verify-code-pass/

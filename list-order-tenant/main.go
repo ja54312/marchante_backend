@@ -36,6 +36,8 @@ type SubOrders struct {
 	IDMarket       int     `json:"id_market"`
 	TypeMarket     string  `json:"type_market"`
 	NameMarket     string  `json:"name_market"`
+	NameUser       string  `json:"name_user"`
+	MailUser       string  `json:"mail_user"`
 }
 
 type Response struct {
@@ -202,14 +204,14 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		results, err := db.Query("SELECT a.id, a.id_order, a.id_product, b.name, a.quantity, a.price_pz, a.price_kg, a.total, a.status_suborder, b.id_market, c.type_market, c.name FROM detail_order as a left join products as b on a.id_product = b.id left join cat_markets as c on b.id_market = c.id WHERE a.id_tenant = ? ORDER BY a.id ASC", request.PathParameters["id_tenant"])
+		results, err := db.Query("SELECT a.id, a.id_order, a.id_product, b.name, a.quantity, a.price_pz, a.price_kg, a.total, a.status_suborder, b.id_market, c.type_market, c.name, d.name, d.mail FROM detail_order as a left join products as b on a.id_product = b.id left join cat_markets as c on b.id_market = c.id left join users as d on a.id_customer = d.id WHERE a.id_tenant = ? ORDER BY a.id ASC", request.PathParameters["id_tenant"])
 		if err != nil {
 			panic(err)
 		}
 
 		for results.Next() {
 			var row SubOrders
-			err = results.Scan(&row.IDDetailOrder, &row.IDOrder, &row.IDProduct, &row.NameProduct, &row.Quantity, &row.PricePZ, &row.PriceKG, &row.Subtotal, &row.StatusSuborder, &row.IDMarket, &row.TypeMarket, &row.NameMarket)
+			err = results.Scan(&row.IDDetailOrder, &row.IDOrder, &row.IDProduct, &row.NameProduct, &row.Quantity, &row.PricePZ, &row.PriceKG, &row.Subtotal, &row.StatusSuborder, &row.IDMarket, &row.TypeMarket, &row.NameMarket, &row.NameUser, &row.MailUser)
 			if err != nil {
 				panic(err.Error())
 			}
